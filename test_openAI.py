@@ -7,8 +7,7 @@ def test_openai():
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a helpful chatbot."},
-            {"role": "user", "content": "Hello, how are you?"}
+            {"role": "user", "content": "What is the date today?"}
         ]
     )
     print(response.choices[0].message.content)  # ✅ Corrected output format
