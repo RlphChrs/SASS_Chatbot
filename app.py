@@ -7,8 +7,10 @@ app = FastAPI()
 
 # Define request model for chatbot API
 class ChatRequest(BaseModel):
-    school_id: str
-    user_input: str
+    schoolId: str   
+    studentId: str 
+    userInput: str  
+
 
 @app.post("/process_file")
 def process_uploaded_file(data: dict):
@@ -16,8 +18,8 @@ def process_uploaded_file(data: dict):
 
     # Extract school ID and filename from file path
     parts = file_path.split("/")
-    school_id = parts[1]  # Example: "uc-banilad"
-    file_name = parts[-1]  # Example: "enrollment_guide.pdf"
+    school_id = parts[1]  
+    file_name = parts[-1]  
 
     print(f" Processing uploaded file for school: {school_id}")
 
@@ -29,8 +31,9 @@ def process_uploaded_file(data: dict):
 # API Endpoint
 @app.post("/chatbot")
 def chatbot_response(request: ChatRequest):
-    response_text = query_chatbot(request.school_id, request.user_input)
-    return {"response": response_text}
+    response_text = query_chatbot(request.schoolId, request.userInput)
+    return {"botResponse": response_text} 
+
 
 if __name__ == "__main__":
     import uvicorn
