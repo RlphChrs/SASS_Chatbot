@@ -11,9 +11,9 @@ def query_chatbot(school_id, user_input):
 
     # ensuring pincecon index is correctly formatted
     search_results = index.query(
-        vector=query_vector,  # ✅ Must use keyword argument
+        vector=query_vector,  #  Must use keyword argument
         top_k=3,
-        filter={"school": school_id},  # ✅ Filter by school
+        filter={"school": school_id},  #  Filter by school
         include_metadata=True
     )
 

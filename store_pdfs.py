@@ -11,15 +11,15 @@ def extract_text_from_pdf(school_id, file_name):
     local_path = os.path.join(TEMP_DIR, f"{school_id}_{file_name}")
     os.makedirs(TEMP_DIR, exist_ok=True)
 
-    # Download file from Firebase Storage
+    # download file from Firebase Storage
     blob = bucket.blob(f"schools/{school_id}/pdfs/{file_name}")
     blob.download_to_filename(local_path)
 
-    # Extract text from PDF
+    # extract text from PDF
     text = extract_text(local_path)
     return text
 
-# Function to chunk text into smaller parts
+# chunk text into smaller parts
 def chunk_text(text, chunk_size=500):
     words = text.split()
     return [" ".join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
