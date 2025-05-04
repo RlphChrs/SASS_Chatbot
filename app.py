@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from store_pdfs import store_pdfs 
 from query_chatbot import query_chatbot  
 from pydantic import BaseModel
+import asyncio
 
 app = FastAPI()
 
@@ -28,11 +29,15 @@ def process_uploaded_file(data: dict):
 
     return {"status": "success", "message": f"Processed {file_name} for {school_id}"}
 
-# API Endpoint
+
+# ✅ Async chatbot endpoint using executor to avoid blocking
 @app.post("/chatbot")
-def chatbot_response(request: ChatRequest):
-    response_text = query_chatbot(request.schoolId, request.userInput)
-    return {"botResponse": response_text} 
+async def chatbot_response(request: ChatRequest):
+    loop = asyncio.get_event_loop()
+    response_text = await loop.run_in_executor(
+        None, lambda: query_chatbot(request.schoolId, request.userInput)
+    )
+    return {"botResponse": response_text}
 
 
 if __name__ == "__main__":
