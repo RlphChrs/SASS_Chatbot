@@ -6,7 +6,6 @@ from config import bucket, index
 
 TEMP_DIR = os.path.abspath("temp")
 
-# download and extract text from PDFs
 def extract_text_from_pdf(school_id, file_name):
     local_path = os.path.join(TEMP_DIR, f"{school_id}_{file_name}")
     os.makedirs(TEMP_DIR, exist_ok=True)
@@ -36,10 +35,13 @@ def store_pdfs(school_id, file_name):
         )
         vector = response.data[0].embedding
 
-        # Store in Pinecone with school ID metadata
-        index.upsert([(f"{school_id}_{file_name}_{i}", vector, {"school": school_id, "text": chunk})])
+        #Store in Pinecone with fileName for deletion later
+        metadata = {
+            "school": school_id,
+            "source": file_name,  
+            "text": chunk
+        }
 
-        print(f"✅ Stored chunk {i} for {school_id} in Pinecone")
+        index.upsert([(f"{school_id}_{file_name}_{i}", vector, metadata)])
 
-if __name__ == "__main__":
-    store_pdfs("uc-banilad", "enrollment_guide.pdf")
+        print(f" Stored chunk {i} for {school_id} ({file_name}) in Pinecone")

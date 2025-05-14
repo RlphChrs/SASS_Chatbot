@@ -4,7 +4,7 @@ from pinecone import pinecone, ServerlessSpec
 import openai
 
 #  Initialize Firebase
-cred = credentials.Certificate("serviceAccountKey.json")  # Ensure this file exists
+cred = credentials.Certificate("serviceAccountKey.json") 
 firebase_admin.initialize_app(cred, {"storageBucket": "sass-db-946b7.firebasestorage.app"})
 bucket = storage.bucket()
 
