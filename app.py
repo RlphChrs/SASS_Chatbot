@@ -20,6 +20,7 @@ class DeleteChunksRequest(BaseModel):
     schoolId: str
     fileName: str
 
+chatbot_ready_map = {}
 
 @app.post("/process_file")
 def process_uploaded_file(data: dict):
@@ -27,15 +28,29 @@ def process_uploaded_file(data: dict):
 
     # Extract school ID and filename from file path
     parts = file_path.split("/")
-    school_id = parts[1]  
-    file_name = parts[-1]  
+    school_id = parts[1]
+    file_name = parts[-1]
 
     print(f" Processing uploaded file for school: {school_id}")
 
     # Automatically process and store the file
     store_pdfs(school_id, file_name)
 
-    return {"status": "success", "message": f"Processed {file_name} for {school_id}"}
+    # Mark chatbot as ready for this school
+    chatbot_ready_map[school_id] = True
+    print(f"✅ Chatbot marked as ready for: {school_id}")
+
+    return {
+        "status": "success",
+        "message": f"Processed {file_name} for {school_id}"
+    }
+
+
+@app.get("/api/sao/chatbot/ready")
+def is_chatbot_ready(school_id: str):
+    ready = chatbot_ready_map.get(school_id, False)
+    return {"ready": ready}
+
 
 
 # chatbot endpoint using executor to avoid blocking
