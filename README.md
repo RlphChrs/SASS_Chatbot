@@ -34,7 +34,7 @@ The backend is triggered by the **SAO Admin backend** whenever a school uploads 
 
 ---
 
-⚠️ Security Note
+## ⚠️ Security Note  
 🔐 Important:
 This repository previously contained a file that included all API credentials (e.g., OpenAI, Pinecone) as part of its history. However, these credentials have since been revoked and deleted, and the associated services are no longer accessible using those keys.
 
