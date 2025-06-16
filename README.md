@@ -27,7 +27,7 @@ The backend is triggered by the **SAO Admin backend** whenever a school uploads 
 |----------|------|
 | Backend Framework | FastAPI |
 | Language | Python |
-| PDF Parsing | 
+| PDF Parsing | PdfMiner |
 | Embedding Model | OpenAI Embeddings |
 | Vector Database | Pinecone |
 | Environment Config | Python `dotenv` |
@@ -43,5 +43,5 @@ Always store secrets in a .env file and never commit sensitive credentials to ve
 ---
 
 ## Author
-Ralph Pilapil
+Ralph Pilapil  
 Email: ralphc.pilapil@gmail.com
